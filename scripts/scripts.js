@@ -74,7 +74,6 @@ const WORLD_DATA = {
     { city: "Islamabad", country: "Pakistan" },
     { city: "Karachi", country: "Pakistan" },
     { city: "Lahore", country: "Pakistan" },
-    { city: "Islamabad", country: "Pakistan" },
     { city: "Kathmandu", country: "Nepal" },
     { city: "Thimphu", country: "Bhutan" },
     { city: "Male", country: "Maldives" },
@@ -94,7 +93,6 @@ const WORLD_DATA = {
     { city: "Cebu", country: "Philippines" },
     { city: "Tehran", country: "Iran" },
     { city: "Mashhad", country: "Iran" },
-    { city: "Baghdad", country: "Iraq" },
     { city: "Basra", country: "Iraq" },
     { city: "Riyadh", country: "Saudi Arabia" },
     { city: "Jeddah", country: "Saudi Arabia" },
@@ -438,56 +436,52 @@ function pickOptions(correctCountry, poolCountries, count = 3) {
   return shuffle(chosen);
 }
 
+// handle questions
+function getNextQuestion() {
+  const remaining = questionList.filter((q) => !guessedCities.includes(q.city));
+  if (remaining.length === 0) return null;
+  // pick next sequentially or randomly
+  return remaining[0]; // or: remaining[Math.floor(Math.random()*remaining.length)]
+}
+
 function showQuestion() {
   canAnswer = true;
-  const current = questionList[index];
+  const current = getNextQuestion();
   if (!current) {
-    // no question
     stage = "results";
     showResults();
     return;
   }
 
-  // set card front/back
   cityNameEl.textContent = current.city;
   cityHintEl.textContent = selectedContinent;
   backCountry.textContent = current.country;
   cardInner.classList.remove("flipped");
 
-  // build options from pool countries
   const poolCountries = uniq(questionList.map((q) => q.country));
   const opts = pickOptions(current.country, poolCountries, 3);
 
-  // render options
   optionsEl.innerHTML = "";
   opts.forEach((opt) => {
     const btn = document.createElement("button");
     btn.className = "opt-btn";
     btn.textContent = opt;
-    btn.onclick = () => {
-      handleAnswer(opt, btn);
-    };
+    btn.onclick = () => handleAnswer(opt, current);
     optionsEl.appendChild(btn);
   });
 
   updateUI();
 }
 
-function handleAnswer(selectedCountry, btnEl) {
+function handleAnswer(selectedCountry, current) {
   if (!canAnswer) return;
   canAnswer = false;
 
-  const current = questionList[index];
-
-  // ✅ mark this city as guessed
   guessedCities.push(current.city);
-
   const correct = selectedCountry === current.country;
 
-  // flip card
   setTimeout(() => cardInner.classList.add("flipped"), 80);
 
-  // show result styles
   Array.from(optionsEl.children).forEach((b) => {
     b.disabled = true;
     if (b.textContent === current.country) b.classList.add("opt-correct");
@@ -495,7 +489,6 @@ function handleAnswer(selectedCountry, btnEl) {
       b.classList.add("opt-wrong");
   });
 
-  // update metrics
   if (correct) {
     score++;
     streak++;
@@ -505,17 +498,14 @@ function handleAnswer(selectedCountry, btnEl) {
 
   updateUI();
 
-  // advance after short delay
   setTimeout(() => {
-    index++;
-    // calculate next level
-    const nextLevel = Math.floor(index / QUESTIONS_PER_LEVEL) + 1;
+    // calculate level
+    const nextLevel =
+      Math.floor(guessedCities.length / QUESTIONS_PER_LEVEL) + 1;
     level = nextLevel;
 
-    // regenerate questions while skipping guessed cities
-    questionList = questionList.filter((q) => !guessedCities.includes(q.city));
-
-    if (index >= totalAllowed || questionList.length === 0) {
+    const next = getNextQuestion();
+    if (!next || guessedCities.length >= totalAllowed) {
       stage = "results";
       showResults();
     } else {
@@ -604,4 +594,3 @@ document.addEventListener("keydown", (e) => {
     if (first) first.click();
   }
 });
-
