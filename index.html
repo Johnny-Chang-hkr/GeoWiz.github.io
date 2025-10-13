@@ -1,1 +1,152 @@
+<!doctype html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GeoWiz — Modern Minimalist</title>
+
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-mark">🧙</div>
+                <div>
+                    <div class="title">GeoWiz🌐</div>
+                    <div class="subtitle">Modern geography quiz — card mode</div>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:10px;align-items:center">
+                <div style="text-align:right">
+                    <div style="font-size:12px;color:var(--muted)">Score</div>
+                    <div id="ui-score" style="font-weight:800;font-size:16px">0</div>
+                </div>
+                <div style="text-align:right;margin-left:8px">
+                    <div style="font-size:12px;color:var(--muted)">Level</div>
+                    <div id="ui-level" style="font-weight:800;font-size:16px">1</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEFT: main gameplay -->
+        <div class="left">
+            <!-- Continent selector -->
+            <div class="glass fade-in">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div style="font-weight:700">Choose continent</div>
+                    <div style="font-size:13px;color:var(--muted)">Each level: 5 questions</div>
+                </div>
+
+                <div id="continentGrid" class="continent-grid"></div>
+
+                <div style="display:flex;gap:10px;margin-top:14px">
+                    <button id="startBtn" class="btn mint">Start Quiz</button>
+                    <button id="previewBtn" class="btn ghost">Preview</button>
+                    <button id="resetBtn" class="btn ghost">Reset</button>
+                </div>
+            </div>
+
+            <!-- Card area -->
+            <div class="card-wrap">
+                <div class="card-scene">
+                    <div class="card" aria-hidden="false">
+                        <div id="cardInner" class="card-inner">
+                            <div class="card-face card-front">
+                                <div>
+                                    <div style="font-size:13px;color:var(--muted)" id="q-meta">Level 1 • Q 1</div>
+                                    <div class="city" id="cityName">City</div>
+                                    <div class="hint" id="cityHint">Continent hint</div>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;align-items:center">
+                                    <div style="font-size:12px;color:var(--muted)">Think carefully — choose the country
+                                    </div>
+                                    <div style="font-size:12px;color:var(--muted)">•</div>
+                                </div>
+                            </div>
+
+                            <div class="card-face card-back">
+                                <div style="text-align:center">
+                                    <div style="font-size:13px;color:#06514a">Answer</div>
+                                    <div style="font-size:28px;font-weight:800;color:#062f2e;margin-top:8px"
+                                        id="backCountry">Country</div>
+                                    <div style="margin-top:10px;color:var(--muted)">The card flips after each selection
+                                    </div>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;align-items:center">
+                                    <div style="font-size:12px;color:var(--muted)">Score updates automatically</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="glass fade-in">
+                <div style="font-weight:700;margin-bottom:8px">Options</div>
+                <div id="options" class="options"></div>
+            </div>
+
+            <div class="footer-note">Tip: edit the embedded dataset inside the HTML to add more cities.</div>
+        </div>
+
+        <!-- RIGHT: stats & controls -->
+        <aside class="right-panel">
+            <div class="glass">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div style="font-weight:700">Progress</div>
+                    <div style="font-size:13px;color:var(--muted)">Questions</div>
+                </div>
+
+                <div style="display:flex;gap:8px;margin-bottom:10px">
+                    <div class="stat" style="flex:1">
+                        <div style="font-size:12px;color:var(--muted)">Score</div>
+                        <div id="scoreBox" style="font-size:18px">0</div>
+                    </div>
+                    <div class="stat" style="flex:1">
+                        <div style="font-size:12px;color:var(--muted)">Streak</div>
+                        <div id="streakBox" style="font-size:18px">0</div>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:8px;margin-bottom:6px">
+                    <div class="stat" style="flex:1">
+                        <div style="font-size:12px;color:var(--muted)">Level</div>
+                        <div id="levelBox" style="font-size:18px">1</div>
+                    </div>
+                    <div class="stat" style="flex:1">
+                        <div style="font-size:12px;color:var(--muted)">Remaining</div>
+                        <div id="remainingBox" style="font-size:18px">5</div>
+                    </div>
+                </div>
+
+                <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+                    <button id="nextBtn" class="btn" style="width:100%">Next</button>
+                    <button id="quitBtn" class="btn ghost" style="width:100%">Quit</button>
+                </div>
+            </div>
+
+            <div class="glass" style="display:flex;flex-direction:column;gap:8px">
+                <div style="font-weight:700">Level Summary</div>
+                <div id="summaryText" style="color:var(--muted);font-size:13px">Score progress appears here after each
+                    level.</div>
+                <div style="display:flex;gap:8px;margin-top:6px">
+                    <button id="shareBtn" class="btn ghost" style="flex:1">Share</button>
+                    <button id="againBtn" class="btn mint" style="flex:1">Play Again</button>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <script src="/scripts/scripts.js">
+
+    </script>
+</body>
+
+</html>
