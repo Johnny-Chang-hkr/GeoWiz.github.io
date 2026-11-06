@@ -1,10 +1,63 @@
 /*******************************
- * GeoWiz - Vanilla JS version
- * Modern Minimalist UI
+ * GeoWiz city and country data.
  *******************************/
 
 // --- Embedded dataset
 const WORLD_DATA = {
+  "North America": [
+    { city: "New York City", country: "United States" },
+    { city: "Los Angeles", country: "United States" },
+    { city: "Chicago", country: "United States" },
+    { city: "Miami", country: "United States" },
+    { city: "San Francisco", country: "United States" },
+    { city: "Seattle", country: "United States" },
+    { city: "Toronto", country: "Canada" },
+    { city: "Vancouver", country: "Canada" },
+    { city: "Montreal", country: "Canada" },
+    { city: "Ottawa", country: "Canada" },
+    { city: "Mexico City", country: "Mexico" },
+    { city: "Guadalajara", country: "Mexico" },
+    { city: "Monterrey", country: "Mexico" },
+    { city: "Havana", country: "Cuba" },
+    { city: "Santo Domingo", country: "Dominican Republic" },
+    { city: "Port-au-Prince", country: "Haiti" },
+    { city: "Kingston", country: "Jamaica" },
+    { city: "San José", country: "Costa Rica" },
+    { city: "Panama City", country: "Panama" },
+    { city: "Guatemala City", country: "Guatemala" },
+    { city: "Tegucigalpa", country: "Honduras" },
+    { city: "Managua", country: "Nicaragua" },
+    { city: "San Salvador", country: "El Salvador" },
+    { city: "Belmopan", country: "Belize" },
+    { city: "Nassau", country: "The Bahamas" },
+    { city: "Bridgetown", country: "Barbados" },
+    { city: "Port of Spain", country: "Trinidad and Tobago" },
+    { city: "Nuuk", country: "Greenland" },
+  ],
+  "South America": [
+    { city: "Buenos Aires", country: "Argentina" },
+    { city: "Córdoba", country: "Argentina" },
+    { city: "La Paz", country: "Bolivia" },
+    { city: "Sucre", country: "Bolivia" },
+    { city: "Brasília", country: "Brazil" },
+    { city: "Rio de Janeiro", country: "Brazil" },
+    { city: "São Paulo", country: "Brazil" },
+    { city: "Santiago", country: "Chile" },
+    { city: "Valparaíso", country: "Chile" },
+    { city: "Bogotá", country: "Colombia" },
+    { city: "Medellín", country: "Colombia" },
+    { city: "Quito", country: "Ecuador" },
+    { city: "Guayaquil", country: "Ecuador" },
+    { city: "Georgetown", country: "Guyana" },
+    { city: "Asunción", country: "Paraguay" },
+    { city: "Lima", country: "Peru" },
+    { city: "Cusco", country: "Peru" },
+    { city: "Paramaribo", country: "Suriname" },
+    { city: "Montevideo", country: "Uruguay" },
+    { city: "Caracas", country: "Venezuela" },
+    { city: "Maracaibo", country: "Venezuela" },
+    { city: "Cayenne", country: "French Guiana" },
+  ],
   Europe: [
     { city: "Paris", country: "France" },
     { city: "Berlin", country: "Germany" },
@@ -116,7 +169,6 @@ const WORLD_DATA = {
     { city: "Dushanbe", country: "Tajikistan" },
     { city: "Nur-Sultan", country: "Kazakhstan" },
     { city: "Almaty", country: "Kazakhstan" },
-    { city: "Helsinki", country: "Finland" },
   ],
   Africa: [
     { city: "Cairo", country: "Egypt" },
@@ -317,6 +369,7 @@ const WORLD_DATA = {
   ],
 };
 
+if (document.getElementById("ui-score")) {
 // --- utility
 function shuffle(arr) {
   const a = arr.slice();
@@ -594,3 +647,4 @@ document.addEventListener("keydown", (e) => {
     if (first) first.click();
   }
 });
+}

@@ -2,151 +2,203 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>GeoWiz — Modern Minimalist</title>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7f4">
+    <meta name="description"
+        content="Explore the world one city at a time. Play quick geography quizzes, learn as you go, and track your best scores with GeoWiz.">
+    <title>GeoWiz — A little more world-wise</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/scripts.js" defer></script>
+    <script src="scripts/app.js" defer></script>
 </head>
 
 <body>
     <div class="app">
-        <div class="header">
-            <div class="logo">
-                <div class="logo-mark">🧙</div>
-                <div>
-                    <div class="title">GeoWiz🌐</div>
-                    <div class="subtitle">Modern geography quiz — card mode</div>
-                </div>
+        <header class="site-header">
+            <a class="brand" href="#" aria-label="GeoWiz home">
+                <span class="brand-mark" aria-hidden="true">◎</span>
+                <span class="brand-copy">
+                    <span class="brand-name">GeoWiz<span class="brand-period">.</span></span>
+                    <span class="brand-tagline">A little more world-wise</span>
+                </span>
+            </a>
+            <div class="header-actions">
+                <span class="header-note"><span class="live-dot"></span> Your daily escape</span>
+                <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch to dark theme"
+                    title="Toggle theme">
+                    <span id="themeIcon" aria-hidden="true">☾</span>
+                </button>
             </div>
+        </header>
 
-            <div style="display:flex;gap:10px;align-items:center">
-                <div style="text-align:right">
-                    <div style="font-size:12px;color:var(--muted)">Score</div>
-                    <div id="ui-score" style="font-weight:800;font-size:16px">0</div>
+        <main>
+            <section class="hero" aria-labelledby="pageTitle">
+                <div class="hero-copy">
+                    <p class="eyebrow"><span aria-hidden="true">✳</span> THE WORLD IS YOURS TO DISCOVER</p>
+                    <h1 id="pageTitle">How well do you<br><span>know the world?</span></h1>
+                    <p class="hero-description">A city, four countries, one right answer. Take a little trip around
+                        the globe — no passport required.</p>
                 </div>
-                <div style="text-align:right;margin-left:8px">
-                    <div style="font-size:12px;color:var(--muted)">Level</div>
-                    <div id="ui-level" style="font-weight:800;font-size:16px">1</div>
+                <div class="hero-art" aria-hidden="true">
+                    <span class="orbit orbit-one"></span>
+                    <span class="orbit orbit-two"></span>
+                    <span class="globe">🌍</span>
+                    <span class="orbit-star star-one">✳</span>
+                    <span class="orbit-star star-two">✦</span>
+                    <span class="orbit-star star-three">·</span>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- LEFT: main gameplay -->
-        <div class="left">
-            <!-- Continent selector -->
-            <div class="glass fade-in">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-                    <div style="font-weight:700">Choose continent</div>
-                    <div style="font-size:13px;color:var(--muted)">Each level: 5 questions</div>
-                </div>
-
-                <div id="continentGrid" class="continent-grid"></div>
-
-                <div style="display:flex;gap:10px;margin-top:14px">
-                    <button id="startBtn" class="btn mint">Start Quiz</button>
-                    <button id="previewBtn" class="btn ghost">Preview</button>
-                    <button id="resetBtn" class="btn ghost">Reset</button>
-                </div>
-            </div>
-
-            <!-- Card area -->
-            <div class="card-wrap">
-                <div class="card-scene">
-                    <div class="card" aria-hidden="false">
-                        <div id="cardInner" class="card-inner">
-                            <div class="card-face card-front">
-                                <div>
-                                    <div style="font-size:13px;color:var(--muted)" id="q-meta">Level 1 • Q 1</div>
-                                    <div class="city" id="cityName">City</div>
-                                    <div class="hint" id="cityHint">Continent hint</div>
-                                </div>
-                                <div style="display:flex;justify-content:space-between;align-items:center">
-                                    <div style="font-size:12px;color:var(--muted)">Think carefully — choose the country
-                                    </div>
-                                    <div style="font-size:12px;color:var(--muted)">•</div>
-                                </div>
+            <div class="dashboard">
+                <section class="main-column" aria-label="Geography quiz">
+                    <section class="panel setup-panel" aria-labelledby="continentHeading">
+                        <div class="section-heading">
+                            <div>
+                                <p class="eyebrow">01 — PICK YOUR DESTINATION</p>
+                                <h2 id="continentHeading">Where to today?</h2>
                             </div>
-
-                            <div class="card-face card-back">
-                                <div style="text-align:center">
-                                    <div style="font-size:13px;color:#06514a">Answer</div>
-                                    <div style="font-size:28px;font-weight:800;color:#062f2e;margin-top:8px"
-                                        id="backCountry">Country</div>
-                                    <div style="margin-top:10px;color:var(--muted)">The card flips after each selection
-                                    </div>
-                                </div>
-                                <div style="display:flex;justify-content:space-between;align-items:center">
-                                    <div style="font-size:12px;color:var(--muted)">Score updates automatically</div>
-                                </div>
-                            </div>
-
+                            <span class="selection-note" id="selectionNote">Europe selected</span>
                         </div>
-                    </div>
-                </div>
+                        <div id="continentGrid" class="continent-grid" role="group"
+                            aria-label="Choose a continent"></div>
+                        <div class="settings-row">
+                            <label class="select-field">
+                                <span>Questions</span>
+                                <select id="questionCount" aria-label="Number of questions">
+                                    <option value="5">Quick trip · 5</option>
+                                    <option value="10" selected>Get exploring · 10</option>
+                                    <option value="15">Go all in · 15</option>
+                                </select>
+                            </label>
+                            <label class="select-field">
+                                <span>Challenge</span>
+                                <select id="difficulty" aria-label="Challenge difficulty">
+                                    <option value="easy">Easy · 3 choices</option>
+                                    <option value="standard" selected>Classic · 4 choices</option>
+                                    <option value="expert">Expert · 5 choices</option>
+                                </select>
+                            </label>
+                            <label class="toggle-field" for="timedMode">
+                                <span class="toggle-copy"><strong>Beat the clock</strong><small>15 sec per
+                                        question</small></span>
+                                <input id="timedMode" type="checkbox" role="switch">
+                            </label>
+                        </div>
+                        <div class="preview-tools">
+                            <button id="previewBtn" class="text-btn" type="button" aria-expanded="false"
+                                aria-controls="previewPanel">Preview sample cities <span aria-hidden="true">⌄</span>
+                            </button>
+                            <div id="previewPanel" class="preview-panel" hidden></div>
+                        </div>
+                    </section>
+
+                    <section class="panel quiz-panel" aria-labelledby="quizHeading">
+                        <div class="quiz-topline">
+                            <div>
+                                <p class="eyebrow" id="quizEyebrow">YOUR ADVENTURE STARTS HERE</p>
+                                <h2 id="quizHeading">Ready when you are</h2>
+                            </div>
+                            <span class="question-counter" id="questionCounter">10 questions</span>
+                        </div>
+                        <div class="progress-track" role="progressbar" id="quizProgress" aria-label="Quiz progress"
+                            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="timer-track" id="timerTrack" hidden>
+                            <div class="timer-fill" id="timerFill"></div>
+                        </div>
+
+                        <div class="question-card" id="questionCard">
+                            <div class="question-decoration" aria-hidden="true">✳</div>
+                            <div class="question-label" id="questionLabel">A city somewhere in Europe</div>
+                            <div class="city-name" id="cityName" aria-live="polite" aria-atomic="true">Your next
+                                adventure</div>
+                            <div class="question-prompt" id="questionPrompt">Which country is this city in?</div>
+                            <div class="answer-reveal" id="answerReveal" aria-live="polite"></div>
+                        </div>
+
+                        <div class="options-heading">
+                            <span id="optionsLabel">Choose your answer</span>
+                            <span class="keyboard-hint" id="keyboardHint">Press 1–4 to answer</span>
+                        </div>
+                        <div id="options" class="options" role="group" aria-labelledby="optionsLabel"></div>
+
+                        <div class="quiz-actions">
+                            <button id="hintBtn" class="text-btn" type="button" disabled>
+                                <span aria-hidden="true">✦</span> Use a hint <kbd>H</kbd>
+                            </button>
+                            <span class="hint-status" id="hintStatus" aria-live="polite"></span>
+                            <button id="startBtn" class="btn btn-primary" type="button">
+                                Start exploring <span aria-hidden="true">↗</span>
+                            </button>
+                            <button id="nextBtn" class="btn btn-primary" type="button" hidden>
+                                Next question <span aria-hidden="true">→</span>
+                            </button>
+                            <button id="shareBtn" class="text-btn" type="button" hidden>
+                                Share result <span aria-hidden="true">↗</span>
+                            </button>
+                        </div>
+                        <p class="sr-only" id="liveMessage" aria-live="polite" aria-atomic="true"></p>
+                    </section>
+                </section>
+
+                <aside class="sidebar" aria-label="Your progress and help">
+                    <section class="panel stats-panel" aria-labelledby="statsHeading">
+                        <div class="section-heading compact-heading">
+                            <div>
+                                <p class="eyebrow">YOUR TRAVEL LOG</p>
+                                <h2 id="statsHeading">Looking good.</h2>
+                            </div>
+                            <span class="stats-icon" aria-hidden="true">↗</span>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card stat-highlight">
+                                <span class="stat-label">Best score</span>
+                                <strong id="bestScore">—</strong>
+                                <span class="stat-caption" id="bestScoreCaption">Your next personal best</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Quizzes played</span>
+                                <strong id="gamesPlayed">0</strong>
+                                <span class="stat-caption">little trips taken</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">This round</span>
+                                <strong id="roundScore">0<span class="score-total"> / 10</span></strong>
+                                <span class="stat-caption" id="accuracyCaption">Answers correct</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Best streak</span>
+                                <strong id="bestStreak">0</strong>
+                                <span class="stat-caption">in a row</span>
+                            </div>
+                        </div>
+                        <button class="reset-stats" id="resetStatsBtn" type="button">Reset my stats</button>
+                    </section>
+
+                    <section class="panel guide-panel" aria-labelledby="guideHeading">
+                        <p class="eyebrow">A FEW SHORTCUTS</p>
+                        <h2 id="guideHeading">Make yourself at home.</h2>
+                        <ul class="guide-list">
+                            <li><span class="guide-icon" aria-hidden="true">⌨</span><span><strong>Quick picks</strong>
+                                    <small>Use number keys to choose an answer.</small></span></li>
+                            <li><span class="guide-icon" aria-hidden="true">✦</span><span><strong>Need a
+                                        nudge?</strong> <small>Hints reveal a clue, but cost a point.</small></span></li>
+                            <li><span class="guide-icon" aria-hidden="true">↵</span><span><strong>Keep
+                                        moving</strong> <small>Hit Enter to go to the next question.</small></span></li>
+                        </ul>
+                        <p class="guide-footnote">No pressure. Just a little geography.</p>
+                    </section>
+                </aside>
             </div>
+        </main>
 
-            <!-- Options -->
-            <div class="glass fade-in">
-                <div style="font-weight:700;margin-bottom:8px">Options</div>
-                <div id="options" class="options"></div>
-            </div>
-
-            <div class="footer-note">Tip: edit the embedded dataset inside the HTML to add more cities.</div>
-        </div>
-
-        <!-- RIGHT: stats & controls -->
-        <aside class="right-panel">
-            <div class="glass">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-                    <div style="font-weight:700">Progress</div>
-                    <div style="font-size:13px;color:var(--muted)">Questions</div>
-                </div>
-
-                <div style="display:flex;gap:8px;margin-bottom:10px">
-                    <div class="stat" style="flex:1">
-                        <div style="font-size:12px;color:var(--muted)">Score</div>
-                        <div id="scoreBox" style="font-size:18px">0</div>
-                    </div>
-                    <div class="stat" style="flex:1">
-                        <div style="font-size:12px;color:var(--muted)">Streak</div>
-                        <div id="streakBox" style="font-size:18px">0</div>
-                    </div>
-                </div>
-
-                <div style="display:flex;gap:8px;margin-bottom:6px">
-                    <div class="stat" style="flex:1">
-                        <div style="font-size:12px;color:var(--muted)">Level</div>
-                        <div id="levelBox" style="font-size:18px">1</div>
-                    </div>
-                    <div class="stat" style="flex:1">
-                        <div style="font-size:12px;color:var(--muted)">Remaining</div>
-                        <div id="remainingBox" style="font-size:18px">5</div>
-                    </div>
-                </div>
-
-                <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
-                    <button id="nextBtn" class="btn" style="width:100%">Next</button>
-                    <button id="quitBtn" class="btn ghost" style="width:100%">Quit</button>
-                </div>
-            </div>
-
-            <div class="glass" style="display:flex;flex-direction:column;gap:8px">
-                <div style="font-weight:700">Level Summary</div>
-                <div id="summaryText" style="color:var(--muted);font-size:13px">Score progress appears here after each
-                    level.</div>
-                <div style="display:flex;gap:8px;margin-top:6px">
-                    <button id="shareBtn" class="btn ghost" style="flex:1">Share</button>
-                    <button id="againBtn" class="btn mint" style="flex:1">Play Again</button>
-                </div>
-            </div>
-
-        </aside>
+        <footer class="site-footer">
+            <span>Made for curious minds <span aria-hidden="true">✳</span></span>
+            <span>GeoWiz <span id="currentYear"></span> · Keep wandering</span>
+        </footer>
     </div>
-
-    <script src="scripts/scripts.js">
-
-    </script>
 </body>
 
 </html>
